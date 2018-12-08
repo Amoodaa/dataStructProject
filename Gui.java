@@ -5,6 +5,10 @@
  */
 package dsdoublelinkedlist;
 
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,13 +32,14 @@ public class Gui extends javax.swing.JFrame {
         InsertPanel.setVisible(false);
         PrintPanel.setVisible(false);
         DeletePanel.setVisible(false);
-        deleteRadioGroup.add(jRadioButton1);
-        deleteRadioGroup.add(jRadioButton2);
-        deleteRadioGroup.add(jRadioButton3);
-        deleteRadioGroup.add(jRadioButton4);
-        insertRadioGroup.add(jRadioButton5);
-        insertRadioGroup.add(jRadioButton6);
-        insertRadioGroup.add(jRadioButton7);
+        deleteRadioGroup.add(DeleteHead);
+        deleteRadioGroup.add(DeleteById);
+        deleteRadioGroup.add(DeleteByName);
+        deleteRadioGroup.add(DeleteTail);
+        insertRadioGroup.add(InsertLast);
+        insertRadioGroup.add(InsertAfterId);
+        insertRadioGroup.add(InsertAfterName);
+        insertRadioGroup.add(InsertAtHead);
         pack();
     }
 
@@ -58,31 +63,42 @@ public class Gui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         DeletePanel = new javax.swing.JPanel();
-        InputId = new javax.swing.JSpinner();
-        InputFirst = new javax.swing.JTextField();
-        InputLast = new javax.swing.JTextField();
+        inputDeleteId = new javax.swing.JSpinner();
+        inputDeleteFirst = new javax.swing.JTextField();
+        inputDeleteLast = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        DeleteById = new javax.swing.JRadioButton();
+        DeleteByName = new javax.swing.JRadioButton();
+        DeleteHead = new javax.swing.JRadioButton();
+        DeleteTail = new javax.swing.JRadioButton();
+        deleteConfirmBtn = new javax.swing.JButton();
         InsertPanel = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        inputInsertFirst = new javax.swing.JTextField();
+        inputInsertLast = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
+        InsertAfterId = new javax.swing.JRadioButton();
+        InsertAtHead = new javax.swing.JRadioButton();
+        InsertLast = new javax.swing.JRadioButton();
+        InsertAfterName = new javax.swing.JRadioButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        inputInsertAfterId = new javax.swing.JSpinner();
+        inputInsertAfterFirst = new javax.swing.JTextField();
+        inputInsertAfterLast = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        insertConfirmBtn = new javax.swing.JButton();
+        inputInsertMid = new javax.swing.JSpinner();
+        inputInsertFin = new javax.swing.JSpinner();
+        newIds = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student");
@@ -125,6 +141,11 @@ public class Gui extends javax.swing.JFrame {
 
         nothingButton.setText("jButton5");
         nothingButton.setEnabled(false);
+        nothingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nothingButtonActionPerformed(evt);
+            }
+        });
 
         PrintPanel.setMaximumSize(getPreferredSize());
         PrintPanel.setMinimumSize(getPreferredSize());
@@ -143,7 +164,7 @@ public class Gui extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 247, Short.MAX_VALUE)
+            .addGap(0, 159, Short.MAX_VALUE)
         );
 
         PrintPanel.setViewportView(jPanel1);
@@ -155,11 +176,15 @@ public class Gui extends javax.swing.JFrame {
         DeletePanel.setMaximumSize(new java.awt.Dimension(800, 170));
         DeletePanel.setMinimumSize(new java.awt.Dimension(800, 170));
 
-        InputFirst.setMaximumSize(new java.awt.Dimension(59, 20));
-        InputFirst.setMinimumSize(new java.awt.Dimension(59, 20));
+        inputDeleteId.setEnabled(false);
 
-        InputLast.setMaximumSize(new java.awt.Dimension(59, 20));
-        InputLast.setMinimumSize(new java.awt.Dimension(59, 20));
+        inputDeleteFirst.setEnabled(false);
+        inputDeleteFirst.setMaximumSize(new java.awt.Dimension(59, 20));
+        inputDeleteFirst.setMinimumSize(new java.awt.Dimension(59, 20));
+
+        inputDeleteLast.setEnabled(false);
+        inputDeleteLast.setMaximumSize(new java.awt.Dimension(59, 20));
+        inputDeleteLast.setMinimumSize(new java.awt.Dimension(59, 20));
 
         jLabel2.setText("ID");
 
@@ -169,13 +194,23 @@ public class Gui extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Deleting Method"));
 
-        jRadioButton2.setText("jRadioButton2");
+        DeleteById.setText("By ID");
+        DeleteById.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                DeleteByIdStateChanged(evt);
+            }
+        });
 
-        jRadioButton3.setText("jRadioButton3");
+        DeleteByName.setText("By Name");
+        DeleteByName.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                DeleteByNameStateChanged(evt);
+            }
+        });
 
-        jRadioButton1.setText("jRadioButton1");
+        DeleteHead.setText("Head");
 
-        jRadioButton4.setText("jRadioButton4");
+        DeleteTail.setText("Tail");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -184,27 +219,34 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
+                    .addComponent(DeleteTail)
+                    .addComponent(DeleteByName)
+                    .addComponent(DeleteById)
+                    .addComponent(DeleteHead))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addComponent(DeleteHead)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(DeleteById)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
+                .addComponent(DeleteByName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
+                .addComponent(DeleteTail)
                 .addContainerGap())
         );
 
-        jRadioButton1.getAccessibleContext().setAccessibleDescription("");
+        DeleteHead.getAccessibleContext().setAccessibleDescription("");
+
+        deleteConfirmBtn.setText("Confirm");
+        deleteConfirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteConfirmBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DeletePanelLayout = new javax.swing.GroupLayout(DeletePanel);
         DeletePanel.setLayout(DeletePanelLayout);
@@ -215,15 +257,18 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(18, 18, 18)
-                .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(InputId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(InputLast, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(InputFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(552, Short.MAX_VALUE))
+                    .addGroup(DeletePanelLayout.createSequentialGroup()
+                        .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
+                        .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputDeleteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputDeleteLast, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                            .addComponent(inputDeleteFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(deleteConfirmBtn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DeletePanelLayout.setVerticalGroup(
             DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,20 +277,22 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(DeletePanelLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(InputId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputDeleteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(InputFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputDeleteFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(DeletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(InputLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                            .addComponent(inputDeleteLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteConfirmBtn))
                     .addGroup(DeletePanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         InsertPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Insertion"));
@@ -258,8 +305,7 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel13.setText("Final");
 
-        jLabel1.setText("ID:" +Student.ids +""
-        );
+        jLabel1.setText("Id:");
         jLabel1.setName("id"); // NOI18N
         jLabel1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
@@ -273,21 +319,31 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel10.setText("First Name");
 
-        jTextField2.setText("                                              ");
+        inputInsertFirst.setMaximumSize(new java.awt.Dimension(144, 20));
+        inputInsertFirst.setMinimumSize(new java.awt.Dimension(144, 20));
 
-        jTextField3.setText("                                              ");
-
-        jTextField4.setText("                                              ");
-
-        jTextField5.setText("                                              ");
+        inputInsertLast.setMaximumSize(new java.awt.Dimension(144, 20));
+        inputInsertLast.setMinimumSize(new java.awt.Dimension(144, 20));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Insertion Method"));
 
-        jRadioButton5.setText("insert last");
+        InsertAfterId.setText("insert after id");
+        InsertAfterId.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                InsertAfterIdStateChanged(evt);
+            }
+        });
 
-        jRadioButton6.setText("insert after");
+        InsertAtHead.setText("at Head");
 
-        jRadioButton7.setText("at Head");
+        InsertLast.setText("insert last");
+
+        InsertAfterName.setText("insert after name");
+        InsertAfterName.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                InsertAfterNameStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -296,22 +352,97 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton6)
-                    .addComponent(jRadioButton5)
-                    .addComponent(jRadioButton7))
+                    .addComponent(InsertAtHead)
+                    .addComponent(InsertAfterId)
+                    .addComponent(InsertLast)
+                    .addComponent(InsertAfterName))
                 .addGap(20, 20, 20))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton7)
+                .addComponent(InsertAtHead)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton5)
+                .addComponent(InsertAfterId)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton6)
+                .addComponent(InsertAfterName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(InsertLast)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Insert after:"));
+
+        jLabel6.setText("First Name");
+
+        jLabel7.setText("Last Name");
+
+        inputInsertAfterId.setEnabled(false);
+
+        inputInsertAfterFirst.setEnabled(false);
+        inputInsertAfterFirst.setMaximumSize(new java.awt.Dimension(59, 20));
+        inputInsertAfterFirst.setMinimumSize(new java.awt.Dimension(59, 20));
+
+        inputInsertAfterLast.setEnabled(false);
+        inputInsertAfterLast.setMaximumSize(new java.awt.Dimension(59, 20));
+        inputInsertAfterLast.setMinimumSize(new java.awt.Dimension(59, 20));
+
+        jLabel5.setText("ID");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inputInsertAfterId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputInsertAfterLast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inputInsertAfterFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inputInsertAfterId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inputInsertAfterFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inputInsertAfterLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        insertConfirmBtn.setText("Confirm");
+        insertConfirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertConfirmBtnActionPerformed(evt);
+            }
+        });
+
+        newIds.setText("1");
+        newIds.setName("id"); // NOI18N
+        newIds.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                newIdsAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         javax.swing.GroupLayout InsertPanelLayout = new javax.swing.GroupLayout(InsertPanel);
         InsertPanel.setLayout(InsertPanelLayout);
@@ -322,44 +453,63 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13))
-                .addGap(22, 22, 22)
-                .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(509, Short.MAX_VALUE))
+                    .addGroup(InsertPanelLayout.createSequentialGroup()
+                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(22, 22, 22)
+                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputInsertLast, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(inputInsertFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(inputInsertFin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                                .addComponent(inputInsertMid, javax.swing.GroupLayout.Alignment.LEADING))))
+                    .addComponent(insertConfirmBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(InsertPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(newIds, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
         InsertPanelLayout.setVerticalGroup(
             InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InsertPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InsertPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(InsertPanelLayout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(InsertPanelLayout.createSequentialGroup()
+                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(newIds))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inputInsertFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inputInsertLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                            .addComponent(inputInsertMid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(inputInsertFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(insertConfirmBtn)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -374,7 +524,8 @@ public class Gui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(PrintPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(createButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -404,11 +555,11 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PrintPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PrintPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(InsertPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -439,19 +590,7 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_printButtonActionPerformed
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
-        try {
-            if (DEBUG) {
-                Node newNode = new Node(new Student("hi", "why", 30, 40));
-
-                list.insertFirst(newNode);
-                showInsertPanel();
-            } else {
-
-                showInsertPanel();
-            }
-        } catch (marksNotInRangeException ex) {
-            JOptionPane.showMessageDialog(null, "Not in range correct the marks" + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-        }
+        showInsertPanel();
         pack();
         deleteButton.setEnabled(true);
         printButton.setEnabled(true);
@@ -469,6 +608,84 @@ public class Gui extends javax.swing.JFrame {
         showDeletePanel();
         pack();
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void nothingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nothingButtonActionPerformed
+
+    }//GEN-LAST:event_nothingButtonActionPerformed
+
+    private void DeleteByNameStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_DeleteByNameStateChanged
+        // TODO add your handling code here:
+        if (DeleteByName.isSelected()) {
+            inputDeleteFirst.setEnabled(true);
+            inputDeleteLast.setEnabled(true);
+            inputDeleteId.setEnabled(false);
+        } else {
+            inputDeleteFirst.setEnabled(false);
+            inputDeleteLast.setEnabled(false);
+        }
+    }//GEN-LAST:event_DeleteByNameStateChanged
+
+    private void DeleteByIdStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_DeleteByIdStateChanged
+        // TODO add your handling code here:
+        if (DeleteById.isSelected()) {
+            inputDeleteFirst.setEnabled(false);
+            inputDeleteLast.setEnabled(false);
+            inputDeleteId.setEnabled(true);
+        } else {
+            inputDeleteId.setEnabled(false);
+        }
+    }//GEN-LAST:event_DeleteByIdStateChanged
+
+    private void InsertAfterIdStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_InsertAfterIdStateChanged
+        // TODO add your handling code here:
+        if (InsertAfterId.isSelected()) {
+            inputInsertAfterFirst.setEnabled(false);
+            inputInsertAfterLast.setEnabled(false);
+            inputInsertAfterId.setEnabled(true);
+        } else {
+            inputInsertAfterId.setEnabled(false);
+        }
+    }//GEN-LAST:event_InsertAfterIdStateChanged
+
+    private void InsertAfterNameStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_InsertAfterNameStateChanged
+        // TODO add your handling code here:
+        if (InsertAfterName.isSelected()) {
+            inputInsertAfterFirst.setEnabled(true);
+            inputInsertAfterLast.setEnabled(true);
+            inputInsertAfterId.setEnabled(false);
+        } else {
+            inputInsertAfterFirst.setEnabled(false);
+            inputInsertAfterLast.setEnabled(false);
+        }
+    }//GEN-LAST:event_InsertAfterNameStateChanged
+
+    private void insertConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertConfirmBtnActionPerformed
+        Node newNode = null;
+        try {
+            newNode = new Node(new Student(inputInsertFirst.getText(),
+                    inputInsertLast.getText(), (int) inputInsertMid.getValue(),
+                    (int) inputInsertFin.getValue()));
+        } catch (marksNotInRangeException ex) {
+            JOptionPane.showMessageDialog(null, "Not in range correct the marks" + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        }
+        NodeWrapper afterNode = null;
+        if (inputInsertAfterFirst.getText() != null && inputInsertAfterLast.getText() != null) {
+            afterNode = new NodeWrapper(inputInsertAfterFirst.getText(), inputInsertAfterLast.getText());
+        } else if (Double.parseDouble(inputInsertAfterFirst.getText()) != 0) {
+            afterNode = new NodeWrapper(Integer.parseInt(inputInsertAfterFirst.getText()));
+        }
+        insertHandler(newNode, afterNode);
+        newIds.setText(String.valueOf(Student.ids));
+    }//GEN-LAST:event_insertConfirmBtnActionPerformed
+
+    private void deleteConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteConfirmBtnActionPerformed
+        // TODO add your handling code here:
+        DeleteHandler(Integer.parseInt((String) inputDeleteId.getValue()), inputDeleteFirst.getText(), inputDeleteLast.getText());
+    }//GEN-LAST:event_deleteConfirmBtnActionPerformed
+
+    private void newIdsAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_newIdsAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newIdsAncestorAdded
 
     public static void main(String args[]) {
 
@@ -499,19 +716,37 @@ public class Gui extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new Gui().setVisible(true);
         });
+
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton DeleteById;
+    private javax.swing.JRadioButton DeleteByName;
+    private javax.swing.JRadioButton DeleteHead;
     private javax.swing.JPanel DeletePanel;
-    private javax.swing.JTextField InputFirst;
-    private javax.swing.JSpinner InputId;
-    private javax.swing.JTextField InputLast;
+    private javax.swing.JRadioButton DeleteTail;
+    private javax.swing.JRadioButton InsertAfterId;
+    private javax.swing.JRadioButton InsertAfterName;
+    private javax.swing.JRadioButton InsertAtHead;
+    private javax.swing.JRadioButton InsertLast;
     private javax.swing.JPanel InsertPanel;
     private javax.swing.JScrollPane PrintPanel;
     private javax.swing.JButton createButton;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JButton deleteConfirmBtn;
     private javax.swing.ButtonGroup deleteRadioGroup;
+    private javax.swing.JTextField inputDeleteFirst;
+    private javax.swing.JSpinner inputDeleteId;
+    private javax.swing.JTextField inputDeleteLast;
+    private javax.swing.JTextField inputInsertAfterFirst;
+    private javax.swing.JSpinner inputInsertAfterId;
+    private javax.swing.JTextField inputInsertAfterLast;
+    private javax.swing.JSpinner inputInsertFin;
+    private javax.swing.JTextField inputInsertFirst;
+    private javax.swing.JTextField inputInsertLast;
+    private javax.swing.JSpinner inputInsertMid;
     private javax.swing.JButton insertButton;
+    private javax.swing.JButton insertConfirmBtn;
     private javax.swing.ButtonGroup insertRadioGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -521,21 +756,15 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel newIds;
     private javax.swing.JButton nothingButton;
     private javax.swing.JButton printButton;
     // End of variables declaration//GEN-END:variables
@@ -551,8 +780,57 @@ public class Gui extends javax.swing.JFrame {
         jPanel1.setSize(jPanel1.getPreferredSize());
     }
 
-    private void insert(String insertType, String first, String second, int mid, int fin) {
+    String getSelectedButton(ButtonGroup btngrp) {
+        for (Enumeration<AbstractButton> buttons = btngrp.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
+    }
 
+    private void insertHandler(Node newNode, NodeWrapper afterNode) {
+        String radioButtonText = getSelectedButton(this.insertRadioGroup);
+
+        if (radioButtonText.equals(InsertAtHead.getText())) {
+            list.insertFirst(newNode);
+            return;
+        }
+        if (radioButtonText.equals(InsertAfterId.getText())) {
+            if (afterNode == null) {
+                list.insertLast(newNode);
+                JOptionPane.showMessageDialog(null, "no Entries so inserted last");
+            } else {
+                list.insertAfter(newNode, afterNode);
+            }
+            return;
+        }
+        if (radioButtonText.equals(InsertLast.getText())) {
+            list.insertLast(newNode);
+            return;
+        }
+    }
+
+    private void DeleteHandler(int id, String first, String last) {
+        String radioButtonText = getSelectedButton(this.deleteRadioGroup);
+
+        if (radioButtonText.equals(DeleteHead.getText())) {
+            list.deleteFirst();
+            return;
+        }
+        if (radioButtonText.equals(DeleteById.getText())) {
+            list.delete(id);
+            return;
+        }
+        if (radioButtonText.equals(DeleteByName.getText())) {
+            list.delete(first, last);
+            return;
+        }
+        if (radioButtonText.equals(DeleteTail.getText())) {
+            list.deleteLast();
+        }
+        JOptionPane.showMessageDialog(null, "delete successful");
     }
 
     void showInsertPanel() {
@@ -572,5 +850,9 @@ public class Gui extends javax.swing.JFrame {
         InsertPanel.setVisible(false);
         PrintPanel.setVisible(true);
         //    PrintPanel.setSize(PrintPanel.getPreferredSize());
+    }
+
+    void clearAllFields() {
+        
     }
 }
