@@ -27,7 +27,7 @@ public class JNodeComponent extends javax.swing.JPanel {
         LastName.setText(n.info.last + "");
         mid.setText(n.info.mid + "");
         fin.setText(n.info.fin + "");
-        average.setText(n.info.average + "");
+        average.setText(n.info.total + "");
         grade.setText(n.info.grade + "");
     }
 

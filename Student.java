@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dsdoublelinkedlist;
 
-/**
- *
- * @author amood
- */
 public class Student {
 
-    static int ids = 0;
+    static int ids = 1;
     int id;
     String first, last;
-    double mid, fin, average;
+    int mid, fin, total;
     char grade;
 
     protected Student(int id) {
@@ -25,7 +16,7 @@ public class Student {
         this.id = ids++;
     }
 
-    public Student(String first, String last, double mid, double fin) throws marksNotInRangeException {
+    public Student(String first, String last, int mid, int fin) throws marksNotInRangeException {
         this.id = ids++;
         this.first = first;
         this.last = last;
@@ -41,8 +32,8 @@ public class Student {
         } else {
             throw new marksNotInRangeException(fin + "not in acceptable range");
         }
-        this.average = (mid + fin) / 100;
-        this.grade = getRating(this.average);
+        this.total = mid + fin;
+        this.grade = getRating(this.total);
     }
 
     static char getRating(double average) {
@@ -69,7 +60,7 @@ public class Student {
     @Override
     public boolean equals(Object o) {
         Student st = (Student) o;
-        return this.id == st.id;
+        return this.id == st.id || ((this.first == null ? st.first == null : this.first.equals(st.first)) &&(this.last == null ? st.last == null : this.last.equals(st.last)));
     }
 }
 

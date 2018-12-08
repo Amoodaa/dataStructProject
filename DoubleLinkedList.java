@@ -1,28 +1,19 @@
-/*
- * Studento change this license header, choose License Headers in Project Properties.
- * Studento change this template file, choose Studentools | Studentemplates
- * and open the template in the editor.
- */
 package dsdoublelinkedlist;
 
-/**
- *
- * @author amood
- */
 public class DoubleLinkedList {
-
+    
     Node firstNode, lastNode;
     //<editor-fold defaultstate="collapsed" desc="singleton and constructors">
     private static DoubleLinkedList instance;
-
+    
     private DoubleLinkedList() {
     }
-
+    
     private DoubleLinkedList(Node firstNode, Node lastNode) {
         this.firstNode = firstNode;
         this.lastNode = lastNode;
     }
-
+    
     static DoubleLinkedList getInstance() {
         if (instance == null) {
             instance = new DoubleLinkedList();
@@ -34,8 +25,8 @@ public class DoubleLinkedList {
     boolean isEmpty() {
         return firstNode == null;
     }
-
-    boolean isOnlyOneItem() {
+    
+    boolean hasOnlyOneItem() {
         return firstNode.n == null;
     }
 //<editor-fold defaultstate="collapsed" desc="inserts">
@@ -50,30 +41,36 @@ public class DoubleLinkedList {
             firstNode = newNode;
         }
     }
-
-    void insertAfter(Node newNode) {
-
+    
+    void insertAfter(Node newNode, Node afterNode) {
+        
         if (isEmpty()) {
             insertFirst(newNode);
             return;
         }
-
-        if (isOnlyOneItem()) {
+        
+        if (hasOnlyOneItem() || afterNode == null) {
             insertLast(newNode);
             return;
         }
         Node cur = this.firstNode;
-        while (cur != null && !cur.equals(newNode)) {
+        boolean isFound = false;
+        while (cur.n != null && !isFound) {
+            isFound = !cur.equals(afterNode);
             cur = cur.n;
         }
-        cur.n.p = newNode;
-        cur.n = newNode;
+        if (isFound) {
+            cur.n.p = newNode;
+            cur.n = newNode;
+        } else {
+            insertLast(newNode);
+        }
     }
-
+    
     void insertLast(Node newNode) {
         if (isEmpty()) {
             insertFirst(newNode);
-        } else if (isOnlyOneItem()) {
+        } else if (hasOnlyOneItem()) {
             firstNode.n = newNode;
             newNode.p = firstNode;
             lastNode = newNode;
@@ -90,24 +87,24 @@ public class DoubleLinkedList {
         firstNode = firstNode.n;
         firstNode.p = null;
     }
-
+    
     void delete(String first, String last) {
         Node deleteNode = new NodeWrapper(first, last);
         delete(deleteNode);
-
+        
     }
-
+    
     void delete(int DeleteId) {
         Node deleteNode = new NodeWrapper(DeleteId);
         delete(deleteNode);
     }
-
+    
     void delete(Node deleteNode) {
-
+        
         if (isEmpty()) {
             return;
         }
-
+        
         if (firstNode.equals(deleteNode)) {
             deleteFirst();
             return;
@@ -120,6 +117,11 @@ public class DoubleLinkedList {
             cur = cur.n;
         }
         cur.p.n = cur.n;
+    }
+    
+    void deleteLast() {
+        lastNode = lastNode.p;
+        lastNode.n = null;
     }
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="sorting to be implmented">
@@ -154,19 +156,29 @@ public class DoubleLinkedList {
     }
     }*/
 //</editor-fold>
+//<editor-fold defaultstate="collapsed" desc="small utils for getting and setting that last and first nodes">
     Node getFirst(Node node) {
         if (node.p == null) {
             return node;
         }
         return getFirst(node.p);
     }
-
+    
     Node getlast(Node node) {
         if (node.n == null) {
             return node;
         }
         return getFirst(node.n);
     }
+    
+    void setLast(Node node) {
+        lastNode = getlast(node);
+    }
+    
+    void setFirst(Node node) {
+        firstNode = getFirst(node);
+    }
+//</editor-fold>
 
     void print() {
         System.out.print("null" + " <=> ");
