@@ -45,10 +45,15 @@ class NodeWrapper extends Node {
     }
 
     private static int findID(String first, String last) {
-        DoubleLinkedList l = DoubleLinkedList.getInstance();
-        Node tmp = l.firstNode;
-        while ((tmp.info.first == null ? first == null : tmp.info.first.equals(first)) && (tmp.info.last == null ? last == null : tmp.info.last.equals(last))) {
+        DoubleLinkedList list = DoubleLinkedList.getInstance();
+        Node tmp = list.firstNode;
+        while (!tmp.info.first.equals(first)
+                && !tmp.info.last.equals(last)) {
+            if (tmp.n != null) {
+                return -1;
+            }
             tmp = tmp.n;
+
         }
         return tmp.info.id;
     }

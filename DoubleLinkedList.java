@@ -1,19 +1,19 @@
 package dsdoublelinkedlist;
 
 public class DoubleLinkedList {
-    
+
     Node firstNode, lastNode;
     //<editor-fold defaultstate="collapsed" desc="singleton and constructors">
     private static DoubleLinkedList instance;
-    
+
     private DoubleLinkedList() {
     }
-    
+
     private DoubleLinkedList(Node firstNode, Node lastNode) {
         this.firstNode = firstNode;
         this.lastNode = lastNode;
     }
-    
+
     static DoubleLinkedList getInstance() {
         if (instance == null) {
             instance = new DoubleLinkedList();
@@ -25,7 +25,7 @@ public class DoubleLinkedList {
     boolean isEmpty() {
         return firstNode == null;
     }
-    
+
     boolean hasOnlyOneItem() {
         return firstNode.n == null;
     }
@@ -34,6 +34,8 @@ public class DoubleLinkedList {
     void insertFirst(Node newNode) {
         if (isEmpty()) {
             firstNode = newNode;
+
+            lastNode = firstNode;
         } else {
             firstNode.p = newNode;
             newNode.n = firstNode;
@@ -41,32 +43,38 @@ public class DoubleLinkedList {
             firstNode = newNode;
         }
     }
-    
+
     void insertAfter(Node newNode, Node afterNode) {
-        
+
         if (isEmpty()) {
             insertFirst(newNode);
             return;
         }
-        
-        if (hasOnlyOneItem() || afterNode == null) {
+
+        if (hasOnlyOneItem() || afterNode.info.id == -1) {
             insertLast(newNode);
             return;
         }
-        Node cur = this.firstNode;
+        
+        Node cur = firstNode;
         boolean isFound = false;
         while (cur.n != null && !isFound) {
-            isFound = !cur.equals(afterNode);
+            if (cur.equals(afterNode)) {
+                isFound = true;
+            }
             cur = cur.n;
         }
         if (isFound) {
-            cur.n.p = newNode;
+            Node nextNode = cur.n;
+            newNode.p = cur;
+            newNode.n = nextNode;
             cur.n = newNode;
+            nextNode.p = newNode;
         } else {
             insertLast(newNode);
         }
     }
-    
+
     void insertLast(Node newNode) {
         if (isEmpty()) {
             insertFirst(newNode);
@@ -87,24 +95,24 @@ public class DoubleLinkedList {
         firstNode = firstNode.n;
         firstNode.p = null;
     }
-    
+
     void delete(String first, String last) {
         Node deleteNode = new NodeWrapper(first, last);
         delete(deleteNode);
-        
+
     }
-    
+
     void delete(int DeleteId) {
         Node deleteNode = new NodeWrapper(DeleteId);
         delete(deleteNode);
     }
-    
+
     void delete(Node deleteNode) {
-        
+
         if (isEmpty()) {
             return;
         }
-        
+
         if (firstNode.equals(deleteNode)) {
             deleteFirst();
             return;
@@ -118,7 +126,7 @@ public class DoubleLinkedList {
         }
         cur.p.n = cur.n;
     }
-    
+
     void deleteLast() {
         lastNode = lastNode.p;
         lastNode.n = null;
@@ -163,18 +171,18 @@ public class DoubleLinkedList {
         }
         return getFirst(node.p);
     }
-    
+
     Node getlast(Node node) {
         if (node.n == null) {
             return node;
         }
         return getFirst(node.n);
     }
-    
+
     void setLast(Node node) {
         lastNode = getlast(node);
     }
-    
+
     void setFirst(Node node) {
         firstNode = getFirst(node);
     }
@@ -186,6 +194,13 @@ public class DoubleLinkedList {
         while (tmp != null) {
             System.out.print(tmp + " <=> ");
             tmp = tmp.n;
+        }
+        System.out.println("null");
+        System.out.print("null" + " <=> ");
+        tmp = this.lastNode;
+        while (tmp != null) {
+            System.out.print(tmp + " <=> ");
+            tmp = tmp.p;
         }
         System.out.println("null");
         System.out.println("firstNode:" + firstNode);

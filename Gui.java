@@ -8,7 +8,6 @@ package dsdoublelinkedlist;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -164,7 +163,7 @@ public class Gui extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 159, Short.MAX_VALUE)
+            .addGap(0, 155, Short.MAX_VALUE)
         );
 
         PrintPanel.setViewportView(jPanel1);
@@ -308,12 +307,12 @@ public class Gui extends javax.swing.JFrame {
         jLabel1.setText("Id:");
         jLabel1.setName("id"); // NOI18N
         jLabel1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jLabel1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -321,6 +320,11 @@ public class Gui extends javax.swing.JFrame {
 
         inputInsertFirst.setMaximumSize(new java.awt.Dimension(144, 20));
         inputInsertFirst.setMinimumSize(new java.awt.Dimension(144, 20));
+        inputInsertFirst.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                inputInsertFirstMouseMoved(evt);
+            }
+        });
 
         inputInsertLast.setMaximumSize(new java.awt.Dimension(144, 20));
         inputInsertLast.setMinimumSize(new java.awt.Dimension(144, 20));
@@ -432,15 +436,21 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        inputInsertMid.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                inputInsertMidStateChanged(evt);
+            }
+        });
+
         newIds.setText("1");
         newIds.setName("id"); // NOI18N
         newIds.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 newIdsAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -463,9 +473,8 @@ public class Gui extends javax.swing.JFrame {
                         .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(inputInsertLast, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                             .addComponent(inputInsertFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(inputInsertFin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                                .addComponent(inputInsertMid, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(inputInsertFin, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                            .addComponent(inputInsertMid)))
                     .addComponent(insertConfirmBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(InsertPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -555,7 +564,7 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PrintPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(PrintPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -584,7 +593,8 @@ public class Gui extends javax.swing.JFrame {
 //        jPanel1.setLayout(new FlowLayout());
 //        jPanel1.add(label);
 //        label.setVisible(true); 
-        visuallyRepresent();
+        //    visuallyRepresent();
+        list.print();
         pack();
 
     }//GEN-LAST:event_printButtonActionPerformed
@@ -666,26 +676,33 @@ public class Gui extends javax.swing.JFrame {
                     inputInsertLast.getText(), (int) inputInsertMid.getValue(),
                     (int) inputInsertFin.getValue()));
         } catch (marksNotInRangeException ex) {
-            JOptionPane.showMessageDialog(null, "Not in range correct the marks" + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Not in range correct the marks " + ex.getMessage(), " ", JOptionPane.ERROR_MESSAGE);
         }
-        NodeWrapper afterNode = null;
-        if (inputInsertAfterFirst.getText() != null && inputInsertAfterLast.getText() != null) {
-            afterNode = new NodeWrapper(inputInsertAfterFirst.getText(), inputInsertAfterLast.getText());
-        } else if (Double.parseDouble(inputInsertAfterFirst.getText()) != 0) {
-            afterNode = new NodeWrapper(Integer.parseInt(inputInsertAfterFirst.getText()));
-        }
-        insertHandler(newNode, afterNode);
+        insertHandler(newNode);
         newIds.setText(String.valueOf(Student.ids));
     }//GEN-LAST:event_insertConfirmBtnActionPerformed
 
     private void deleteConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteConfirmBtnActionPerformed
         // TODO add your handling code here:
-        DeleteHandler(Integer.parseInt((String) inputDeleteId.getValue()), inputDeleteFirst.getText(), inputDeleteLast.getText());
+        DeleteHandler();
     }//GEN-LAST:event_deleteConfirmBtnActionPerformed
 
     private void newIdsAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_newIdsAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_newIdsAncestorAdded
+
+    private void inputInsertMidStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inputInsertMidStateChanged
+        if (Integer.parseInt(String.valueOf(inputInsertMid.getValue())) >= 40) {
+            inputInsertMid.setValue(40);
+        }        // TODO add your handling code here:
+        if (Integer.parseInt(String.valueOf(inputInsertMid.getValue())) <= 0) {
+            inputInsertMid.setValue(0);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_inputInsertMidStateChanged
+
+    private void inputInsertFirstMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputInsertFirstMouseMoved
+
+    }//GEN-LAST:event_inputInsertFirstMouseMoved
 
     public static void main(String args[]) {
 
@@ -790,19 +807,27 @@ public class Gui extends javax.swing.JFrame {
         return null;
     }
 
-    private void insertHandler(Node newNode, NodeWrapper afterNode) {
+    private void insertHandler(Node newNode) {
         String radioButtonText = getSelectedButton(this.insertRadioGroup);
 
         if (radioButtonText.equals(InsertAtHead.getText())) {
             list.insertFirst(newNode);
             return;
         }
-        if (radioButtonText.equals(InsertAfterId.getText())) {
-            if (afterNode == null) {
+        if (radioButtonText.equals(InsertAfterId.getText())
+                || radioButtonText.equals(InsertAfterName.getText())) {
+            NodeWrapper afterNode = null;
+            if (inputInsertAfterFirst.isEnabled()) {
+                afterNode = new NodeWrapper(inputInsertAfterFirst.getText(), inputInsertAfterLast.getText());
+            }
+            if (inputInsertAfterId.isEnabled()) {
+                afterNode = new NodeWrapper((int) inputInsertAfterId.getValue());
+            }
+            if (afterNode != null) {
+                list.insertAfter(newNode, afterNode);
+            } else {
                 list.insertLast(newNode);
                 JOptionPane.showMessageDialog(null, "no Entries so inserted last");
-            } else {
-                list.insertAfter(newNode, afterNode);
             }
             return;
         }
@@ -810,21 +835,21 @@ public class Gui extends javax.swing.JFrame {
             list.insertLast(newNode);
             return;
         }
+
     }
 
-    private void DeleteHandler(int id, String first, String last) {
+    private void DeleteHandler() {
         String radioButtonText = getSelectedButton(this.deleteRadioGroup);
-
         if (radioButtonText.equals(DeleteHead.getText())) {
             list.deleteFirst();
             return;
         }
         if (radioButtonText.equals(DeleteById.getText())) {
-            list.delete(id);
+            list.delete((int) inputDeleteId.getValue());
             return;
         }
         if (radioButtonText.equals(DeleteByName.getText())) {
-            list.delete(first, last);
+            list.delete(inputDeleteFirst.getText(), inputDeleteLast.getText());
             return;
         }
         if (radioButtonText.equals(DeleteTail.getText())) {
@@ -853,6 +878,6 @@ public class Gui extends javax.swing.JFrame {
     }
 
     void clearAllFields() {
-        
+
     }
 }

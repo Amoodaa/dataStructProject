@@ -12,10 +12,6 @@ public class Student {
         this.id = id;
     }
 
-    public Student() {
-        this.id = ids++;
-    }
-
     public Student(String first, String last, int mid, int fin) throws marksNotInRangeException {
         this.id = ids++;
         this.first = first;
@@ -60,7 +56,7 @@ public class Student {
     @Override
     public boolean equals(Object o) {
         Student st = (Student) o;
-        return this.id == st.id || ((this.first == null ? st.first == null : this.first.equals(st.first)) &&(this.last == null ? st.last == null : this.last.equals(st.last)));
+        return this.id == st.id || ((this.first == null ? st.first == null : this.first.equals(st.first)) && (this.last == null ? st.last == null : this.last.equals(st.last)));
     }
 }
 
