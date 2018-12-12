@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,7 +21,6 @@ public class Gui extends javax.swing.JFrame {
      * Creates new form Gui
      */
     private DoubleLinkedList list;
-    final boolean DEBUG = true;
 
     public Gui() {
         initComponents();
@@ -58,9 +58,7 @@ public class Gui extends javax.swing.JFrame {
         deleteButton = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
         nothingButton = new javax.swing.JButton();
-        PrintPanel = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        SortToggleButton = new javax.swing.JToggleButton();
         DeletePanel = new javax.swing.JPanel();
         inputDeleteId = new javax.swing.JSpinner();
         inputDeleteFirst = new javax.swing.JTextField();
@@ -75,13 +73,6 @@ public class Gui extends javax.swing.JFrame {
         DeleteTail = new javax.swing.JRadioButton();
         deleteConfirmBtn = new javax.swing.JButton();
         InsertPanel = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        inputInsertFirst = new javax.swing.JTextField();
-        inputInsertLast = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         InsertAfterId = new javax.swing.JRadioButton();
         InsertAtHead = new javax.swing.JRadioButton();
@@ -95,9 +86,20 @@ public class Gui extends javax.swing.JFrame {
         inputInsertAfterLast = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         insertConfirmBtn = new javax.swing.JButton();
-        inputInsertMid = new javax.swing.JSpinner();
+        jPanel3 = new javax.swing.JPanel();
         inputInsertFin = new javax.swing.JSpinner();
+        inputInsertMid = new javax.swing.JSpinner();
+        inputInsertLast = new javax.swing.JTextField();
+        inputInsertFirst = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         newIds = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        PrintPanel = new javax.swing.JPanel();
+        PrintPanescroll = new javax.swing.JScrollPane();
+        PrintTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student");
@@ -138,7 +140,7 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        nothingButton.setText("jButton5");
+        nothingButton.setText("...");
         nothingButton.setEnabled(false);
         nothingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,30 +148,13 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        PrintPanel.setMaximumSize(getPreferredSize());
-        PrintPanel.setMinimumSize(getPreferredSize());
-        PrintPanel.setPreferredSize(new java.awt.Dimension(820, 190));
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Visualization"));
-        jPanel1.setMaximumSize(new java.awt.Dimension(800, 170));
-        jPanel1.setMinimumSize(new java.awt.Dimension(800, 170));
-        jPanel1.setPreferredSize(new java.awt.Dimension(800, 170));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 792, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 155, Short.MAX_VALUE)
-        );
-
-        PrintPanel.setViewportView(jPanel1);
-
-        jToggleButton1.setText("sorted");
-        jToggleButton1.setEnabled(false);
+        SortToggleButton.setText("sorted");
+        SortToggleButton.setEnabled(false);
+        SortToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortToggleButtonActionPerformed(evt);
+            }
+        });
 
         DeletePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Deletion"));
         DeletePanel.setMaximumSize(new java.awt.Dimension(800, 170));
@@ -298,37 +283,6 @@ public class Gui extends javax.swing.JFrame {
         InsertPanel.setMaximumSize(new java.awt.Dimension(800, 170));
         InsertPanel.setMinimumSize(new java.awt.Dimension(800, 170));
 
-        jLabel11.setText("Last Name");
-
-        jLabel12.setText("Midterm");
-
-        jLabel13.setText("Final");
-
-        jLabel1.setText("Id:");
-        jLabel1.setName("id"); // NOI18N
-        jLabel1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jLabel1AncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-
-        jLabel10.setText("First Name");
-
-        inputInsertFirst.setMaximumSize(new java.awt.Dimension(144, 20));
-        inputInsertFirst.setMinimumSize(new java.awt.Dimension(144, 20));
-        inputInsertFirst.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                inputInsertFirstMouseMoved(evt);
-            }
-        });
-
-        inputInsertLast.setMaximumSize(new java.awt.Dimension(144, 20));
-        inputInsertLast.setMinimumSize(new java.awt.Dimension(144, 20));
-
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Insertion Method"));
 
         InsertAfterId.setText("insert after id");
@@ -383,6 +337,7 @@ public class Gui extends javax.swing.JFrame {
         jLabel7.setText("Last Name");
 
         inputInsertAfterId.setEnabled(false);
+        inputInsertAfterId.setValue(1);
 
         inputInsertAfterFirst.setEnabled(false);
         inputInsertAfterFirst.setMaximumSize(new java.awt.Dimension(59, 20));
@@ -414,7 +369,7 @@ public class Gui extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputInsertAfterId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -425,8 +380,7 @@ public class Gui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputInsertAfterLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(jLabel7)))
         );
 
         insertConfirmBtn.setText("Confirm");
@@ -436,23 +390,114 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("New Student"));
+
+        inputInsertFin.setValue(1);
+        inputInsertFin.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                inputInsertFinStateChanged(evt);
+            }
+        });
+
+        inputInsertMid.setValue(1);
         inputInsertMid.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 inputInsertMidStateChanged(evt);
             }
         });
 
+        inputInsertLast.setMaximumSize(new java.awt.Dimension(144, 20));
+        inputInsertLast.setMinimumSize(new java.awt.Dimension(144, 20));
+
+        inputInsertFirst.setMaximumSize(new java.awt.Dimension(144, 20));
+        inputInsertFirst.setMinimumSize(new java.awt.Dimension(144, 20));
+        inputInsertFirst.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                inputInsertFirstMouseMoved(evt);
+            }
+        });
+
+        jLabel1.setText("Id:");
+        jLabel1.setName("id"); // NOI18N
+        jLabel1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jLabel1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         newIds.setText("1");
         newIds.setName("id"); // NOI18N
         newIds.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 newIdsAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
         });
+
+        jLabel10.setText("First Name");
+
+        jLabel11.setText("Last Name");
+
+        jLabel12.setText("Midterm");
+
+        jLabel13.setText("Final");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputInsertLast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputInsertFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inputInsertFin)
+                            .addComponent(inputInsertMid, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(newIds, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(newIds))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(inputInsertFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(inputInsertLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(inputInsertMid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(inputInsertFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout InsertPanelLayout = new javax.swing.GroupLayout(InsertPanel);
         InsertPanel.setLayout(InsertPanelLayout);
@@ -461,64 +506,81 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(InsertPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(InsertPanelLayout.createSequentialGroup()
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addGap(22, 22, 22)
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(inputInsertLast, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(inputInsertFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputInsertFin, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                            .addComponent(inputInsertMid)))
-                    .addComponent(insertConfirmBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(InsertPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(newIds, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(insertConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         InsertPanelLayout.setVerticalGroup(
             InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InsertPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(InsertPanelLayout.createSequentialGroup()
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(InsertPanelLayout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(InsertPanelLayout.createSequentialGroup()
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(newIds))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(inputInsertFirst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(inputInsertLast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(inputInsertMid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(InsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(inputInsertFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(insertConfirmBtn)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(insertConfirmBtn)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PrintPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data:"));
+
+        PrintTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Mid", "Final", "Total", "Grade"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        PrintTable.setColumnSelectionAllowed(true);
+        PrintTable.getTableHeader().setReorderingAllowed(false);
+        PrintPanescroll.setViewportView(PrintTable);
+        PrintTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (PrintTable.getColumnModel().getColumnCount() > 0) {
+            PrintTable.getColumnModel().getColumn(0).setResizable(false);
+            PrintTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+            PrintTable.getColumnModel().getColumn(1).setResizable(false);
+            PrintTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+            PrintTable.getColumnModel().getColumn(2).setResizable(false);
+            PrintTable.getColumnModel().getColumn(2).setPreferredWidth(20);
+            PrintTable.getColumnModel().getColumn(3).setResizable(false);
+            PrintTable.getColumnModel().getColumn(3).setPreferredWidth(20);
+            PrintTable.getColumnModel().getColumn(4).setResizable(false);
+            PrintTable.getColumnModel().getColumn(4).setPreferredWidth(30);
+            PrintTable.getColumnModel().getColumn(5).setResizable(false);
+            PrintTable.getColumnModel().getColumn(5).setPreferredWidth(50);
+        }
+
+        javax.swing.GroupLayout PrintPanelLayout = new javax.swing.GroupLayout(PrintPanel);
+        PrintPanel.setLayout(PrintPanelLayout);
+        PrintPanelLayout.setHorizontalGroup(
+            PrintPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PrintPanescroll, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+        );
+        PrintPanelLayout.setVerticalGroup(
+            PrintPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PrintPanescroll, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -531,8 +593,8 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(InsertPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PrintPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PrintPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -544,7 +606,7 @@ public class Gui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(printButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton1)
+                        .addComponent(SortToggleButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nothingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -559,18 +621,17 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(deleteButton)
                     .addComponent(printButton)
                     .addComponent(nothingButton)
-                    .addComponent(jToggleButton1))
+                    .addComponent(SortToggleButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PrintPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(DeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(InsertPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(PrintPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(InsertPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -587,14 +648,10 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
-        // TODO add your handling code here:
         showPrintPanel();
-//        JLabel label = new JLabel("Not in range correct the marksNot in range correct the marksNot in range correct the marksNot in range correct the marksNot in range correct the marksNot in range correct the marks");
-//        jPanel1.setLayout(new FlowLayout());
-//        jPanel1.add(label);
-//        label.setVisible(true); 
-        //    visuallyRepresent();
-        list.print();
+        ((DefaultTableModel) PrintTable.getModel()).setRowCount(0);
+        setTheTable(list);
+//      list.print();
         pack();
 
     }//GEN-LAST:event_printButtonActionPerformed
@@ -602,16 +659,8 @@ public class Gui extends javax.swing.JFrame {
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
         showInsertPanel();
         pack();
-        deleteButton.setEnabled(true);
-        printButton.setEnabled(true);
-        jToggleButton1.setEnabled(true);
 
     }//GEN-LAST:event_insertButtonActionPerformed
-
-    private void jLabel1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel1AncestorAdded
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jLabel1AncestorAdded
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
@@ -673,36 +722,84 @@ public class Gui extends javax.swing.JFrame {
         Node newNode = null;
         try {
             newNode = new Node(new Student(inputInsertFirst.getText(),
-                    inputInsertLast.getText(), (int) inputInsertMid.getValue(),
+                    inputInsertLast.getText(),
+                    (int) inputInsertMid.getValue(),
                     (int) inputInsertFin.getValue()));
         } catch (marksNotInRangeException ex) {
             JOptionPane.showMessageDialog(null, "Not in range correct the marks " + ex.getMessage(), " ", JOptionPane.ERROR_MESSAGE);
         }
-        insertHandler(newNode);
+        try {
+            insertHandler(newNode);
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Select an insertion method", " ", JOptionPane.ERROR_MESSAGE);
+            Student.ids--;
+        }
         newIds.setText(String.valueOf(Student.ids));
+        if (Student.ids > 0) {
+            deleteButton.setEnabled(true);
+            printButton.setEnabled(true);
+            SortToggleButton.setEnabled(true);
+        }
     }//GEN-LAST:event_insertConfirmBtnActionPerformed
 
     private void deleteConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteConfirmBtnActionPerformed
         // TODO add your handling code here:
-        DeleteHandler();
+        if (list.isEmpty()) {
+            deleteButton.setEnabled(false);
+            printButton.setEnabled(false);
+            SortToggleButton.setEnabled(false);
+            insertButton.doClick();
+            return;
+        }
+        try {
+            DeleteHandler();
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Select an deletion method", " ", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+
     }//GEN-LAST:event_deleteConfirmBtnActionPerformed
 
     private void newIdsAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_newIdsAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_newIdsAncestorAdded
 
-    private void inputInsertMidStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inputInsertMidStateChanged
-        if (Integer.parseInt(String.valueOf(inputInsertMid.getValue())) >= 40) {
-            inputInsertMid.setValue(40);
-        }        // TODO add your handling code here:
-        if (Integer.parseInt(String.valueOf(inputInsertMid.getValue())) <= 0) {
-            inputInsertMid.setValue(0);
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_inputInsertMidStateChanged
+    private void jLabel1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1AncestorAdded
 
     private void inputInsertFirstMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputInsertFirstMouseMoved
 
     }//GEN-LAST:event_inputInsertFirstMouseMoved
+
+    private void inputInsertMidStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inputInsertMidStateChanged
+        if (Integer.parseInt(String.valueOf(inputInsertMid.getValue())) >= 40) {
+            inputInsertMid.setValue(40);
+        }
+        if (Integer.parseInt(String.valueOf(inputInsertMid.getValue())) < 0) {
+            inputInsertMid.setValue(0);
+        }
+    }//GEN-LAST:event_inputInsertMidStateChanged
+
+    private void SortToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortToggleButtonActionPerformed
+        // TODO add your handling code here:
+        if (SortToggleButton.isSelected()) {
+            list.sortByName();
+        } else {
+            list.sortById();
+        }
+        printButton.doClick();
+    }//GEN-LAST:event_SortToggleButtonActionPerformed
+
+    private void inputInsertFinStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inputInsertFinStateChanged
+        if (Integer.parseInt(String.valueOf(inputInsertFin.getValue())) >= 60) {
+            inputInsertFin.setValue(60);
+        }
+        if (Integer.parseInt(String.valueOf(inputInsertFin.getValue())) < 0) {
+            inputInsertFin.setValue(0);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_inputInsertFinStateChanged
 
     public static void main(String args[]) {
 
@@ -718,15 +815,11 @@ public class Gui extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -747,7 +840,10 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JRadioButton InsertAtHead;
     private javax.swing.JRadioButton InsertLast;
     private javax.swing.JPanel InsertPanel;
-    private javax.swing.JScrollPane PrintPanel;
+    private javax.swing.JPanel PrintPanel;
+    private javax.swing.JScrollPane PrintPanescroll;
+    private javax.swing.JTable PrintTable;
+    private javax.swing.JToggleButton SortToggleButton;
     private javax.swing.JButton createButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton deleteConfirmBtn;
@@ -776,11 +872,10 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel newIds;
     private javax.swing.JButton nothingButton;
     private javax.swing.JButton printButton;
@@ -789,12 +884,6 @@ public class Gui extends javax.swing.JFrame {
     private void visuallyRepresent() {
         Node tmp = this.list.firstNode;
 
-        while (tmp.n != null) {
-            this.jPanel1.add(new JNodeComponent(tmp));
-            tmp = tmp.n;
-        }
-        jPanel1.setVisible(true);
-        jPanel1.setSize(jPanel1.getPreferredSize());
     }
 
     String getSelectedButton(ButtonGroup btngrp) {
@@ -807,7 +896,7 @@ public class Gui extends javax.swing.JFrame {
         return null;
     }
 
-    private void insertHandler(Node newNode) {
+    private void insertHandler(Node newNode) throws NullPointerException {
         String radioButtonText = getSelectedButton(this.insertRadioGroup);
 
         if (radioButtonText.equals(InsertAtHead.getText())) {
@@ -838,7 +927,7 @@ public class Gui extends javax.swing.JFrame {
 
     }
 
-    private void DeleteHandler() {
+    private void DeleteHandler() throws NullPointerException {
         String radioButtonText = getSelectedButton(this.deleteRadioGroup);
         if (radioButtonText.equals(DeleteHead.getText())) {
             list.deleteFirst();
@@ -855,7 +944,6 @@ public class Gui extends javax.swing.JFrame {
         if (radioButtonText.equals(DeleteTail.getText())) {
             list.deleteLast();
         }
-        JOptionPane.showMessageDialog(null, "delete successful");
     }
 
     void showInsertPanel() {
@@ -874,10 +962,20 @@ public class Gui extends javax.swing.JFrame {
         DeletePanel.setVisible(false);
         InsertPanel.setVisible(false);
         PrintPanel.setVisible(true);
-        //    PrintPanel.setSize(PrintPanel.getPreferredSize());
+        pack();
     }
 
     void clearAllFields() {
 
     }
+
+    private void setTheTable(DoubleLinkedList list) {
+        DefaultTableModel model = (DefaultTableModel) PrintTable.getModel();
+        Node cur = list.firstNode;
+        while (cur.n != null) {
+            model.addRow((String[]) cur.asRow());
+            cur = cur.n;
+        }
+    }
+
 }

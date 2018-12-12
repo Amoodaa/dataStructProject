@@ -1,5 +1,9 @@
 package dsdoublelinkedlist;
 
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 public class DoubleLinkedList {
 
     Node firstNode, lastNode;
@@ -7,11 +11,6 @@ public class DoubleLinkedList {
     private static DoubleLinkedList instance;
 
     private DoubleLinkedList() {
-    }
-
-    private DoubleLinkedList(Node firstNode, Node lastNode) {
-        this.firstNode = firstNode;
-        this.lastNode = lastNode;
     }
 
     static DoubleLinkedList getInstance() {
@@ -55,7 +54,7 @@ public class DoubleLinkedList {
             insertLast(newNode);
             return;
         }
-        
+
         Node cur = firstNode;
         boolean isFound = false;
         while (cur.n != null && !isFound) {
@@ -92,6 +91,14 @@ public class DoubleLinkedList {
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="delete">
     void deleteFirst() {
+        if (isEmpty()) {
+            return;
+        }
+        if (hasOnlyOneItem()) {
+            firstNode = null;
+            lastNode = null;
+            return;
+        }
         firstNode = firstNode.n;
         firstNode.p = null;
     }
@@ -132,58 +139,81 @@ public class DoubleLinkedList {
         lastNode.n = null;
     }
 //</editor-fold>
-//<editor-fold defaultstate="collapsed" desc="sorting to be implmented">
+//<editor-fold defaultstate="collapsed" desc="sorting">
 
-    /*
     void sortByName() {
-    // if (firstNode.info.first.compareTo(firstNode.n.info.first) > 0) {
-    
+        if (hasOnlyOneItem()) {
+            return;
+        }
+        Node tmp;
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            tmp = firstNode;
+            while (tmp.n != null) {
+                if (tmp.info.first.compareTo(tmp.n.info.first) > 0) {
+                    tmp.swap(tmp.n);
+                    isSorted = false;
+                } else if (tmp.info.first.compareTo(tmp.n.info.first) == 0 && tmp.info.last.compareTo(tmp.n.info.last) > 0) {
+                    tmp.swap(tmp.n);
+                    isSorted = false;
+
+                } else {
+                    tmp = tmp.n;
+                }
+            }
+        }
     }
-    
+
     void sortById() {
-    boolean isSorted = false;
-    Node tmp = lastNode;
-    Node tmp2 = tmp.p;
-    
-    while (!isSorted) {
-    isSorted = true;
-    while (tmp.p.p != null) {
-    if (tmp.info.id < tmp.p.info.id) {
-    tmp.swap(tmp.p);
-    //                    System.out.println("swapped " + tmp.info.id +" "+ tmp.p.info.id);
-    this.print();
-    isSorted = false;
+
+        if (isEmpty()) {
+            return;
+        }
+        if (hasOnlyOneItem()) {
+            return;
+        }
+        Node tmp;
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            tmp = firstNode;
+            while (tmp.n != null) {
+                if (tmp.info.id > tmp.n.info.id) {
+                    tmp.swap(tmp.n);
+                    isSorted = false;
+                } else {
+                    tmp = tmp.n;
+                }
+            }
+        }
     }
-    }
-    if (isSorted) {
-    firstNode = getFirst(tmp);
-    lastNode = getlast(tmp);
-    }
-    tmp = tmp.p;
-    
-    }
-    }*/
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="small utils for getting and setting that last and first nodes">
-    Node getFirst(Node node) {
+
+    Node getFirst(Node node
+    ) {
         if (node.p == null) {
             return node;
         }
         return getFirst(node.p);
     }
 
-    Node getlast(Node node) {
+    Node getlast(Node node
+    ) {
         if (node.n == null) {
             return node;
         }
         return getFirst(node.n);
     }
 
-    void setLast(Node node) {
+    void setLast(Node node
+    ) {
         lastNode = getlast(node);
     }
 
-    void setFirst(Node node) {
+    void setFirst(Node node
+    ) {
         firstNode = getFirst(node);
     }
 //</editor-fold>
@@ -196,14 +226,15 @@ public class DoubleLinkedList {
             tmp = tmp.n;
         }
         System.out.println("null");
-        System.out.print("null" + " <=> ");
+        /*    System.out.print("null" + " <=> ");
         tmp = this.lastNode;
         while (tmp != null) {
             System.out.print(tmp + " <=> ");
             tmp = tmp.p;
         }
         System.out.println("null");
-        System.out.println("firstNode:" + firstNode);
-        System.out.println("lastNode:" + lastNode);
+         */
+//        System.out.println("firstNode:" + firstNode);
+//        System.out.println("lastNode:" + lastNode);
     }
 }

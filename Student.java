@@ -13,23 +13,23 @@ public class Student {
     }
 
     public Student(String first, String last, int mid, int fin) throws marksNotInRangeException {
-        this.id = ids++;
         this.first = first;
         this.last = last;
-        if (mid < 40 && mid > 0) {
+        if (mid <= 40 && mid >= 0) {
             this.mid = mid;
         } else {
             ids--;
             this.id = -1;
             throw new marksNotInRangeException(mid + "not in acceptable range");
         }
-        if (fin < 60 && fin > 0) {
+        if (fin <= 60 && fin >= 0) {
             this.fin = fin;
         } else {
             throw new marksNotInRangeException(fin + "not in acceptable range");
         }
         this.total = mid + fin;
         this.grade = getRating(this.total);
+        this.id = ids++;
     }
 
     static char getRating(double average) {
@@ -46,6 +46,17 @@ public class Student {
             return 'F';
         }
 
+    }
+
+    public String[] asRow() {
+        String[] row = new String[6];
+        row[0] = this.id + "";
+        row[1] = this.first +""+ this.last;
+        row[2] = this.mid + "";
+        row[3] = this.fin + "";
+        row[4] = this.total + "";
+        row[5] = this.grade + "";
+        return row;
     }
 
     @Override

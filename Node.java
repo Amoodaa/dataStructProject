@@ -30,7 +30,14 @@ public class Node {
     }
 
     void swap(Node b) {
-        System.out.println("not yet impl");
+        //swapping info
+        Student tmp = this.info;
+        this.info = b.info;
+        b.info = tmp;
+    }
+
+    Object[] asRow() {
+    return this.info.asRow();
     }
 }
 
