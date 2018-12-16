@@ -1,13 +1,5 @@
 package dsdoublelinkedlist;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.PopupMenu;
-import javax.swing.JFrame;
-import javax.swing.JTable;
-
 public class DsDoubleLinkedList {
 
     public static void main(String[] args) {

@@ -1,9 +1,5 @@
 package dsdoublelinkedlist;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 public class DoubleLinkedList {
 
     Node firstNode, lastNode;
@@ -33,7 +29,6 @@ public class DoubleLinkedList {
     void insertFirst(Node newNode) {
         if (isEmpty()) {
             firstNode = newNode;
-
             lastNode = firstNode;
         } else {
             firstNode.p = newNode;
@@ -60,8 +55,9 @@ public class DoubleLinkedList {
         while (cur.n != null && !isFound) {
             if (cur.equals(afterNode)) {
                 isFound = true;
+            } else {
+                cur = cur.n;
             }
-            cur = cur.n;
         }
         if (isFound) {
             Node nextNode = cur.n;
@@ -130,11 +126,22 @@ public class DoubleLinkedList {
         //prev n 1 2 3 cur.p
         while (cur != null && !cur.equals(deleteNode)) {
             cur = cur.n;
-        }
+        }//derefrencing the deleteNode
         cur.p.n = cur.n;
+        if (cur.n != null) {
+            cur.n.p = cur.p;
+        }
     }
 
     void deleteLast() {
+        if (isEmpty()) {
+            return;
+        }
+        if (hasOnlyOneItem()) {
+            firstNode = null;
+            lastNode = null;
+            return;
+        }
         lastNode = lastNode.p;
         lastNode.n = null;
     }
@@ -226,15 +233,15 @@ public class DoubleLinkedList {
             tmp = tmp.n;
         }
         System.out.println("null");
-        /*    System.out.print("null" + " <=> ");
+        System.out.print("null" + " <=> ");
         tmp = this.lastNode;
         while (tmp != null) {
             System.out.print(tmp + " <=> ");
             tmp = tmp.p;
         }
         System.out.println("null");
-         */
-//        System.out.println("firstNode:" + firstNode);
-//        System.out.println("lastNode:" + lastNode);
+         
+        System.out.println("firstNode:" + firstNode);
+        System.out.println("lastNode:" + lastNode);
     }
 }

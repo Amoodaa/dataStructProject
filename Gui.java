@@ -651,7 +651,7 @@ public class Gui extends javax.swing.JFrame {
         showPrintPanel();
         ((DefaultTableModel) PrintTable.getModel()).setRowCount(0);
         setTheTable(list);
-//      list.print();
+        list.print();
         pack();
 
     }//GEN-LAST:event_printButtonActionPerformed
@@ -786,8 +786,10 @@ public class Gui extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (SortToggleButton.isSelected()) {
             list.sortByName();
+            SortToggleButton.setText("Sorted By Name");
         } else {
             list.sortById();
+            SortToggleButton.setText("Sorted By Id");
         }
         printButton.doClick();
     }//GEN-LAST:event_SortToggleButtonActionPerformed
